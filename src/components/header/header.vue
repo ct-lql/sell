@@ -17,25 +17,90 @@
           <span class="text">{{seller.supports[0].description}}</span>
         </div>
       </div>
-      <div v-if="seller.supports" class="support-count">
+      <div v-if="seller.supports" class="support-count" @click="showDetail">
         <span class="count">{{seller.supports.length}}个</span>
-        <i class="icon-keyboard_arrow_right"></i>
+        <span class="icon-keyboard_arrow_right"></span>
       </div>
     </div>
-    <div class="bulletin-wrapper">
+    <div class="bulletin-wrapper" @click="showDetail">
       <span class="bulletin-title"></span><span class="bulletin-text">{{seller.bulletin}}</span>
       <span class="icon-keyboard_arrow_right"></span>
+    </div>
+    <div class="background">
+      <img width="100%" height="100%" :src="seller.avatar">
+    </div>
+    <div class="detail" v-show="detailShow">
+      <div class="detail-wrapper clearfix">
+        <div class="detail-main">
+          <h1 class="name">{{seller.name}}</h1>
+        </div>
+      </div>
+      <div class="detail-close">
+        <span class="icon-close">×</span>
+      </div>
     </div>
   </div>
 </template>
 <style lang="stylus" type="text/stylus" >
 
-  @import "../../common/stylus/mixin.stylus";
-  @import "../../common/stylus/incon-style.styl"
+  @import "../../common/stylus/mixin.styl";
+  /*@import "../../common/stylus/incon-style.styl"*/
 
-  .header{
-    background-color: rgba(7,17,27,0.5);
-  }
+  .header
+    position relative
+    background-color: rgba(7,17,27,0.5)
+    overflow hidden
+    .background
+      z-index: -1
+      position absolute
+      top: 0
+      left 0px
+      width 100%
+      height 100%
+      -webkit-filter : blur(10px)
+    .detail
+      position fixed
+      z-index 100
+      top: 0px
+      left 0px
+      width 100%
+      height 100%
+      overflow auto
+      background rgba(7,17,27,0.8)
+      .clearfix
+        display :inline-block
+        :after
+          display block
+          content :"."
+          height: 0px
+          line-height : 0px
+          clear:both
+          visibility :hidden
+      .detail-wrapper
+        min-height: 100%
+        width 100%
+        .detail-main
+          margin-top 64px
+          padding-bottom 64px
+          .name
+            line-height 16px
+            text-align center
+            font-size 16px
+            font-weight 700
+      .detail-close
+        position relative
+        text-align center
+        margin -64px auto 0 auto
+        width 32px
+        height 32px
+        clear: both
+        font-size 32px
+
+
+
+
+
+
   .content-wrapper{
     position: relative;
     padding: 24px 12px 18px 24px;
@@ -131,10 +196,6 @@
   }
 
   .bulletin-wrapper{
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width:90%;
     position: relative;
     height: 28px;
     line-height: 28px;
@@ -146,7 +207,7 @@
   }
   .bulletin-title{
     display: inline-block;
-    /*margin-left: 10px;*/
+    margin-left: 10px;
     margin-top: 9px;
     height: 12px;
     width: 22px;
@@ -164,6 +225,7 @@
     margin-left: 4px;
   }
   .bulletin-wrapper > .icon-keyboard_arrow_right{
+    display inline-block
     position: absolute;
     font-size: 10px;
     right: 12px;
@@ -173,13 +235,25 @@
   }
 </style>
 <script type="text/ecmascript-6">
+  import star from '../star/star.vue'
   export default {
     props: {
       seller: {
       }
     },
+    data () {
+      return {
+        detailShow: false
+      }
+    },
+    methods: {
+      showDetail () {
+        this.detailShow = true
+      }
+    },
     created () {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
-    }
+    },
+    'v-star': star
   }
 </script>
