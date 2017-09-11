@@ -33,6 +33,7 @@
       <div class="detail-wrapper clearfix">
         <div class="detail-main">
           <h1 class="name">{{seller.name}}</h1>
+          <v-star :size = "48" :score="4.2"></v-star>
         </div>
       </div>
       <div class="detail-close">
@@ -239,6 +240,7 @@
   export default {
     props: {
       seller: {
+        type: Object
       }
     },
     data () {
@@ -254,6 +256,8 @@
     created () {
       this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee']
     },
-    'v-star': star
+    components: {
+      'v-star': star
+    }
   }
 </script>
