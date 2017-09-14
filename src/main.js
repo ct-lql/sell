@@ -36,4 +36,4 @@ new Vue({
 /*
 默认路由
  */
-router.push('/ratings')
+router.push('/goods')
